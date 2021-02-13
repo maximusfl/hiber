@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 
+@Cacheable
 @Entity
 @Table(name = "item")
 public class Item {

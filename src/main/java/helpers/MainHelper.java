@@ -1,3 +1,5 @@
+package helpers;
+
 import entity.Category;
 import entity.Item;
 import entity.Purchase;
@@ -5,19 +7,17 @@ import entity.Storage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import util.HibernateUtil;
+
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Helper {
+public class MainHelper {
     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    @Transactional
-    public void categories_save_test() {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx =  session.beginTransaction();
-    }
+
 
     @Transactional
     public void generate_item() {

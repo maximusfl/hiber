@@ -1,34 +1,41 @@
 
 
+import helpers.CategoryHelper;
+import helpers.MainHelper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class MainTest {
     @BeforeAll
     public static void setUp(){
-        new Helper().generate_item();
+        new MainHelper().generate_item();
     }
 
 
     @Test
     public void changeItemInStorage(){
-        new Helper().changeItemInStorage();
+        new MainHelper().changeItemInStorage();
     }
 
     @Test
     public void lazyInit() {
-        new Helper().checkLazyInit();
+        new MainHelper().checkLazyInit();
     }
 
 
     @Test
     public void orphanTest() {
-        new Helper().orphanRemovalTest();
+        new MainHelper().orphanRemovalTest();
     }
 
     @Test
     public void purchaseTest(){
-        new Helper().purchaseHelper();
+        new MainHelper().purchaseHelper();
+    }
+
+    @Test
+    public void saveListAsField_Without_merge() {
+        new CategoryHelper().categories_save_test();
     }
 
 

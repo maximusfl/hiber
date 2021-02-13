@@ -13,7 +13,8 @@ public class Category {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+
     private List<Item> items;
 
     public List<Item> getItems() {
