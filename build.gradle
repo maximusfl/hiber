@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '+'
+
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'
+
+    compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.4.27.Final'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
