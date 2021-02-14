@@ -1,4 +1,5 @@
 import entity.Item;
+import helpers.ConcurrencyCacheHelper;
 import helpers.MainHelper;
 import org.hibernate.Cache;
 import org.hibernate.Session;
@@ -29,6 +30,31 @@ public class CacheTest {
         System.out.println(session.get(Item.class, 1L));
         session.close();
     }
+
+    @Test
+    public void concurrencyCacheTest(){
+      new ConcurrencyCacheHelper().readDataManyTimes();
+      new ConcurrencyCacheHelper().readDataManyTimes_2();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Statistics statistics = HibernateUtil.getSessionFactory().getStatistics();
+
+        System.out.println(   statistics.getConnectCount());
+        System.out.println(   statistics.getSecondLevelCacheHitCount());
+        System.out.println(   statistics.getOptimisticFailureCount());
+        System.out.println(   statistics.getSuccessfulTransactionCount());
+        System.out.println(   statistics.getTransactionCount());
+
+        System.out.println( "lol");
+
+        System.out.println(   statistics.getCacheRegionStatistics("entity.Item"));
+
+    }
+
 
     @Test
     public void secondLevelCacheTest() {
