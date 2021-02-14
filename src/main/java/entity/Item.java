@@ -1,10 +1,13 @@
 package entity;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 
 @Cacheable
 @Entity
 @Table(name = "item")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,7 +20,7 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.4.27.Final'
 
 
-    compile group: 'org.ehcache', name: 'ehcache', version: '3.6.1'
+    //compile group: 'org.ehcache', name: 'ehcache', version: '3.6.1'
 
 
 
