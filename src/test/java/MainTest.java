@@ -38,5 +38,10 @@ public class MainTest {
         new CategoryHelper().categories_save_test();
     }
 
+    @Test
+    public void changeItemListInCategory(){
+        new CategoryHelper().changeItemListInCategory();
+    }
+
 
 }
