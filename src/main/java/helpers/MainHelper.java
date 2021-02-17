@@ -13,6 +13,7 @@ import util.HibernateUtil;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainHelper {
     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -21,22 +22,31 @@ public class MainHelper {
 
     @Transactional
     public void generate_item() {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction tx =  session.beginTransaction();
 
-        Category category = new Category();
-        category.setName("cars");
-        Item truck = new Item();
+        for(int i = 0; i < 100; i++) {
+            Category category = new Category();
+            category.setName("cars_"+i);
+            List<Item> items = new ArrayList<>();
+            for(int j = 0; j< 20; j++) {
+                Item truck = new Item();
 
-        truck.setName("volvo");
-        truck.setCategory(category);
+                truck.setName("truck_"+j);
+                truck.setCategory(category);
+                items.add(truck);
 
-        Storage storage = new Storage();
-        storage.setItem(truck);
-        session.persist(storage);
-        storage.setArea(12.3);
-        truck.setPrice(33.4);
+                Storage storage = new Storage();
+                storage.setItem(truck);
+                session.persist(storage);
+                storage.setArea(new Random(10l).nextDouble());
+                truck.setPrice(new Random(10l).nextDouble());
+            }
 
+            category.setItems(items);
+
+        }
+        session.flush();
         tx.commit();
         session.close();
     }
