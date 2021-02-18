@@ -11,9 +11,12 @@ import util.HibernateUtil;
 
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MainHelper {
     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -36,11 +39,20 @@ public class MainHelper {
                 truck.setCategory(category);
                 items.add(truck);
 
+
+
+
+
                 Storage storage = new Storage();
                 storage.setItem(truck);
                 session.persist(storage);
-                storage.setArea(new Random(10l).nextDouble());
-                truck.setPrice(new Random(10l).nextDouble());
+                storage.setArea( BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(1d, 100000d))
+                        .setScale(3, RoundingMode.HALF_UP)
+                        .doubleValue());
+
+                truck.setPrice(BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(1d, 100000d))
+                        .setScale(3, RoundingMode.HALF_UP)
+                        .doubleValue());
             }
 
             category.setItems(items);
