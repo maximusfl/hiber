@@ -1,15 +1,15 @@
+import entity.Category;
 import entity.Item;
 import helpers.ConcurrencyCacheHelper;
 import helpers.MainHelper;
-import org.hibernate.Cache;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.stat.Statistics;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import util.HibernateUtil;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class CacheTest {
@@ -26,9 +26,27 @@ public class CacheTest {
         System.out.println(session.get(Item.class, 1L));
         System.out.println(session.get(Item.class, 1L));
         System.out.println(session.get(Item.class, 1L));
-        System.out.println(session.get(Item.class, 1L));
-        System.out.println(session.get(Item.class, 1L));
+        session.get(Item.class, 1L);
+        System.out.println("lol");
+        session.clear();
+        Category loaded = session.load(Category.class, 1L);
+
+
+        System.out.println(Hibernate.isInitialized(loaded.getItems()));
+        Hibernate.initialize(loaded.getItems());
+        System.out.println(Hibernate.isInitialized(loaded.getItems()));
+
+        System.out.println("38 "+loaded.getId());
+        //System.out.println(loaded.getName());
         session.close();
+        Session session1 = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session1.beginTransaction();
+        Category merge = (Category) session1.merge(loaded);
+        System.out.println("44 "+merge.getId());
+        System.out.println("45 "+merge.getItems());
+//        System.out.println("46 "+loaded.getId());
+//        System.out.println("47 "+loaded.getItems());
+        transaction.commit();
     }
 
     @Test

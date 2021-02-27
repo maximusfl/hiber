@@ -1,5 +1,9 @@
 package entity;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 
 @Entity
@@ -50,6 +54,7 @@ public class Storage {
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
+
 
     @Override
     public String toString() {

@@ -17,8 +17,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Fetch(FetchMode.SUBSELECT)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
@@ -28,7 +26,7 @@ public class Category {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public  void setItems(List<Item> items) {
         this.items = items;
     }
 
@@ -47,4 +45,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
 }

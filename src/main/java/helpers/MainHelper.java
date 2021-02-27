@@ -10,17 +10,28 @@ import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MainHelper {
     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
+    @Transactional
+    public void clearBeforeCommit() {
+        Session session = sessionFactory.openSession();
+        Transaction tx =  session.beginTransaction();
+        Item item = new Item();
+        item.setName("lol");
+        session.persist(item);
+        session.detach(item);
+        tx.commit();
+        session.close();
+    }
 
 
     @Transactional
@@ -32,14 +43,12 @@ public class MainHelper {
             Category category = new Category();
             category.setName("cars_"+i);
             List<Item> items = new ArrayList<>();
-            for(int j = 0; j< 20; j++) {
+            for(int j = 0; j< 100; j++) {
                 Item truck = new Item();
 
                 truck.setName("truck_"+j);
                 truck.setCategory(category);
                 items.add(truck);
-
-
 
 
 
@@ -83,7 +92,7 @@ public class MainHelper {
         System.out.println("**********************************************************");
         System.out.println(storage.getId());
         System.out.println(storage.getItem().getName());
-       // transaction.commit();
+        transaction.commit();
     }
 
     @Transactional

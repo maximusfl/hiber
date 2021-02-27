@@ -2,6 +2,7 @@
 
 import helpers.CategoryHelper;
 import helpers.MainHelper;
+import helpers.QueryHelper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,15 @@ public class MainTest {
         new MainHelper().generate_item();
     }
 
+    @Test
+    public void criteriaTest() {
+        new QueryHelper().criteria_1();
+    }
+
+    @Test
+    public void clearTest() {
+        new MainHelper().clearBeforeCommit();
+    }
 
     @Test
     public void changeItemInStorage(){
@@ -19,6 +29,7 @@ public class MainTest {
 
     @Test
     public void lazyInit() {
+        new MainHelper().generate_item();
         new MainHelper().checkLazyInit();
     }
 

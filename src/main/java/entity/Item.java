@@ -3,17 +3,19 @@ package entity;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Map;
 
 @Cacheable
 @Entity
 @Table(name = "item")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
+
 
     private Double price;
 
@@ -35,6 +37,13 @@ public class Item {
 
     public Item() {
     }
+
+    public Item(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
 
 
     public Long getId() {
@@ -68,6 +77,7 @@ public class Item {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 
     @Override
     public String toString() {

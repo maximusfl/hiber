@@ -5,10 +5,7 @@ import entity.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.query.Query;
 import util.HibernateUtil;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

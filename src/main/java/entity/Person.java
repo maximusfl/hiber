@@ -1,5 +1,7 @@
 package entity;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -13,8 +15,19 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
+    @ManyToMany(mappedBy = "guests")
+    private List<Ticket> tickets;
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 
     @OneToMany
     private Set<Purchase> orders;
@@ -64,6 +77,8 @@ public class Person {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
 
 
