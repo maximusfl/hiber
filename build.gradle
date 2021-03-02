@@ -2,6 +2,7 @@ plugins {
     id 'java'
 }
 
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -19,15 +20,26 @@ dependencies {
 
     compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.4.27.Final'
 
-
-    //compile group: 'org.ehcache', name: 'ehcache', version: '3.6.1'
-
-
-
+    annotationProcessor('org.hibernate:hibernate-jpamodelgen:+')
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
+
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file("src/main/resources")
+}
+
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
 
 test {
     useJUnitPlatform()
