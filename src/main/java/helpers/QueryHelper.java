@@ -1,7 +1,9 @@
 package helpers;
 
 import entity.Item;
+import entity.Item_;
 import entity.Storage;
+import entity.Storage_;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
@@ -26,6 +28,21 @@ public class QueryHelper {
         criteriaQuery.where(price);
         Query query = session.createQuery(criteriaQuery);
         List resultList = query.getResultList();
+        System.out.println(resultList.size());
+
+    }
+
+    public void criteria_2() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Storage> query = criteriaBuilder.createQuery(Storage.class);
+        Root<Storage> storageRoot = query.from(Storage.class);
+        storageRoot.join(Storage_.ITEM,JoinType.INNER);
+        Predicate predicate = criteriaBuilder.between(storageRoot.get(Item_.ID),12,230);
+        query.where(predicate);
+        CriteriaQuery<Storage> select = query.select(storageRoot);
+        Query query1 = session.createQuery(select);
+        List<Storage> resultList = query1.getResultList();
         System.out.println(resultList.size());
 
     }
