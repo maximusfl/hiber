@@ -14,7 +14,7 @@ public class MainTest {
 
     @Test
     public void criteriaTest() {
-        new QueryHelper().criteria_2();
+        new QueryHelper().criteria_3();
     }
 
     @Test
