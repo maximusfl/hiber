@@ -55,7 +55,6 @@ public class QueryHelper {
         CriteriaQuery<Category> criteriaQuery = query.where(predicate);
         criteriaQuery.select(categoryRoot);
 
-
         Query<Category> longQuery = session.createQuery(criteriaQuery);
         List<Category> longs = longQuery.getResultList();
         int size = longs.size();
