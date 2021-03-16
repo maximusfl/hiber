@@ -13,9 +13,6 @@ public class Ticket {
     private Long id;
 
     @ManyToMany
-    @JoinTable(name = "GGG",joinColumns = @JoinColumn(name = "ticket_lol", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk"))
-    , inverseJoinColumns = @JoinColumn(name = "guest_lol"))
     private List<Person> guests;
 
     @Column(unique = true)

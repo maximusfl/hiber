@@ -2,7 +2,9 @@ package helpers;
 
 import entity.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.hibernate.sql.Select;
 import util.HibernateUtil;
 
 import javax.persistence.criteria.*;
@@ -46,10 +48,11 @@ public class QueryHelper {
 
     public void criteria_3() {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Category> query = criteriaBuilder.createQuery(Category.class);
         Root<Category> categoryRoot = query.from(Category.class);
-        Join<Category,List<Item>> join =categoryRoot.join(Category_.ITEMS);
+        Join<Category, List<Item>> join = categoryRoot.join(Category_.ITEMS);
 
         Predicate predicate = criteriaBuilder.lessThan(join.get(Item_.PRICE), 100);
         CriteriaQuery<Category> criteriaQuery = query.where(predicate);
@@ -58,6 +61,32 @@ public class QueryHelper {
         Query<Category> longQuery = session.createQuery(criteriaQuery);
         List<Category> longs = longQuery.getResultList();
         int size = longs.size();
+    }
 
+    public void criteria_4(String carname) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Item> cq = cb.createQuery(Item.class);
+        Root<Item> itemRoot = cq.from(Item.class);
+        Join<Item, Category> join = itemRoot.join(Item_.CATEGORY);
+
+        Selection[] selections = {itemRoot.get(Item_.ID), itemRoot.get(Item_.PRICE)};
+        ParameterExpression<String> nameParam = cb.parameter(String.class, Category_.NAME);
+        cq.select(cb.construct(Item.class, selections)).where(cb.like(join.get(Category_.NAME), nameParam));
+
+        Query query = session.createQuery(cq);
+        query.setParameter(Category_.NAME, carname);
+        List<Item> items = query.getResultList();
+        System.out.println("lol: " + items.size());
+    }
+
+    public void hqlTest() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from Item i join Category c on i.category=c.id where c.name like : param");
+        query.setParameter("param", "cars_0");
+        List<Item> items = query.getResultList();
+        System.out.println("lol: " + items.size());
     }
 }

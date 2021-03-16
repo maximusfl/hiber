@@ -43,6 +43,11 @@ public class Item {
         this.name = name;
     }
 
+    public Item(Long id, Double price) {
+        this.id = id;
+        this.price = price;
+    }
+
 
 
 
